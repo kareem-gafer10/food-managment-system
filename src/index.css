@@ -1,0 +1,280 @@
+body {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  height: 1000px;
+}
+a {
+  text-decoration: none;
+}
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+input,select,textarea {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: #f8f9fa !important;
+  background-color: #f8f9fa !important;
+}
+.mt-6{
+  margin-top: 6rem;
+}
+textarea{
+  resize: none;
+}
+.bg-bage{
+  background-color: #eeee;
+}
+/* form */
+.auth-container {
+  background-image: url("./assets//auth-bg.png");
+  background-size: cover;
+}
+.auth-container .overlay {
+  background: linear-gradient(rgba(47, 140, 96, 0.4), rgba(0, 0, 0, 0.7));
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-container .auth-form {
+  width: 40%;
+}
+.auth-container .logo {
+  width: 50%;
+}
+.auth-container .auth-title {
+  font-weight: 700;
+  font-size: 25px;
+  color: #494949;
+}
+.auth-container .auth-head-title {
+  font-weight: 400;
+  line-height: 19.36px;
+  color: rgba(73, 73, 73, 0.6);
+}
+.input-group-text {
+  border: none !important;
+}
+
+.auth-container .auth-register {
+  width: 60% !important;
+}
+
+.auth-change,
+.auth-change .overlay {
+  background-image: unset;
+}
+
+@media (max-width: 768px) {
+  .auth-container .auth-form {
+    width: 90%;
+    padding: 30px !important;
+  }
+  .auth-container .logo {
+    width: 70%;
+  }
+  .auth-container .auth-register {
+    width: 90% !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .auth-container .auth-form {
+    width: 60%;
+  }
+  .auth-container .auth-register {
+    width: 90% !important;
+  }
+}
+
+/* form */
+
+/* sidebar */
+
+
+
+.sidebar {
+  position: fixed;
+  top: 70px;
+  bottom: 0;
+  background-color: #1f263e;
+  color: #fff;
+  width: 240px;
+  left: -240px;
+  transition: left 0.5s ease;
+  z-index: 1000;
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+.sidebar img {
+  width: 200px;
+}
+.sidebar ul{
+  padding: 0 25px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Navbar */
+.navbar .navbar-brand img {
+  width: 9rem;
+}
+.navbar .profile-image {
+  width: 40px;
+}
+.navbar .cursor {
+  cursor: pointer;
+}
+/* Header */
+.header-bg {
+  background-image: url(./assets/header-bg-svg.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  color: white;
+  padding: 20px;
+}
+/* recipe list header */
+.recipe-list-header {
+  background: rgb(240, 255, 239);
+}
+@media(min-width: 992px) {
+   .recipe-title {
+    width: 50%;
+  }
+}
+
+/* table-user */
+.user-img {
+  width: 56px;
+  height: 56px;
+}
+.user-img-list{
+  width: 25%;
+  
+}
+
+/* not found */
+.notfound {
+  background-image: url(./assets/not-found-bg.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  height: 100vh;
+  width: 100%;
+}
+.notfound .notfound-desc {
+  width: 22%;
+}
+@media(max-width: 768px) {
+  .notfound .notfound-desc {
+    width: 100%;  
+  }
+}
+
+/* dropdown-user */
+.dropdown-toggle::after{
+  border: none !important;
+}
+.dropdown-menu .drop-link{
+  margin-left: 15px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+}
+/* table */
+.table td{
+  vertical-align: middle !important;
+}
+/* recipe data */
+.recipe-data form{
+  width: 50%;
+  margin: 0 auto;
+}
+@media(max-width: 768px) {
+  .recipe-data form{
+    width: 100%;
+  }
+}
+.show-password{
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+/* recipe details */
+.recipe-details{
+  width: 50%;
+}
+.recipe-delete{
+  width: 30%;
+}
+/* favourite */
+.favoutrite{
+  font-size: 15px;
+}
+.recipe-fav{
+  width: 250px;
+  height: 250px;
+}
+.fav-heart{
+  position: absolute;
+  right: 10px;
+  top: 15px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+/* pagination */
+.pagination {
+  margin-top: 30px;
+  flex-wrap: wrap;
+  row-gap: 10px;
+}
+.pagination .page-item .page-link {
+  padding: 5px 15px;
+  background-color: #f1f1f1;
+  border: 1px solid #ddd;
+  color: #333;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 20%;
+  margin: 0 5px;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #0AAD0A;
+  color: #fff;
+}
+.pagination .page-item.disabled .page-link {
+  cursor: not-allowed;
+}
+.pagination .activeclassname a {
+  background-color: var(--main-color) !important;
+  color: #fff !important;
+}
+.pagination .page-link:focus,
+.pagination page-link:focus {
+  box-shadow: none !important;
+}
+
+@media (max-width: 768px) {
+  .pagination .page-item .page-link {
+    padding: 5px 10px;
+  }
+}
