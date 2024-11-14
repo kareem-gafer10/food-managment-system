@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import useSubmitForm from "../../hooks/useSubmitForm";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import usePassword from "../../hooks/usePassword";
+import LoadingButton from "../../components/UI/LoadingButton ";
+import Input from "../../components/UI/Input";
 
 const ResetPassword = () => {
 
@@ -14,8 +16,9 @@ const ResetPassword = () => {
   const password = watch("password");
 
   const {submitForm,loading}= useSubmitForm("Users/Reset",false,"/login");
-  const {showPassword, handleShowPassword}= usePassword()
-
+  const {showPassword, handleShowPassword,
+    showConfirmPassword, handleShowConfirmPassword}
+    = usePassword()
   
  
 
@@ -31,84 +34,70 @@ const ResetPassword = () => {
 
           <form onSubmit={handleSubmit(submitForm)}>
 
-          <div className="input-group flex-nowrap mb-3">
-        <span className="input-group-text"><AiOutlineMail /></span>
-        <input type="email"
-         className="form-control" 
-         placeholder="Enter your E-mail"
-         {...register("email", { 
-        required: "Email is required",  
-      pattern: {
-       value:/^[^\s@]+@[^\s@]+\.[^\s@]+$/ , 
-       message: "Please enter a valid email address."
-               }
-              })}
-         />
-         
-        </div>
-        {errors.email && <p className=" text-danger">
-          {errors.email.message}
-          </p>}
+          <Input 
+          label="email" 
+          type="email"
+           placeholder="Enter your E-mail" 
+           Icon={AiOutlineMail} 
+           register={register} 
+           error={errors.email}
+           validation={{required: "Email is required", pattern: {
+            value:/^[^\s@]+@[^\s@]+\.[^\s@]+$/ , 
+            message: "Please enter a valid email address."}
+            }}
+          />
 
-        <div className="input-group flex-nowrap mb-3">
-        <span className="input-group-text"><AiOutlineMail /></span>
-        <input type="text" className="form-control" placeholder="OTP"
-          {...register("seed", {
-              required: "OTP IS Required",
-          })}
+       
 
-        />
-        </div>
-        {errors.seed && <p className=" text-danger">
-          {errors.seed.message}
-          </p>}
+          <Input
+            label="seed"
+            type="text"
+            placeholder="OTP"
+            Icon={AiOutlineMail}
+            register={register}
+            validation={{ required: "OTP is required" }}
+            error={errors.seed}
+          />
 
 
-
-          <div className="input-group flex-nowrap mb-3">
-        <span className="input-group-text"><CiLock /></span>
-        <input type={`${showPassword ? "text" : "password"}`} 
-        className="form-control" 
-        placeholder="Password" 
-        autoComplete="off"
-        {...register("password", {
-    required: "Password is required",
-    pattern: {
-      value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
-      message: "Password must include at least one lowercase letter, one uppercase letter, one digit, one special character, and be at least 6 characters long."
-    }
-        })}
-        />
-      <div className="show-password" onClick={handleShowPassword}>
-        {showPassword ?  <IoMdEyeOff size={20}/> :<IoMdEye size={20} /> }
-        </div>
-      </div>
-      {errors.password && <p className=" text-danger">
-          {errors.password.message}
-      </p>}
-
-      <div className="input-group flex-nowrap mb-3">
-              <span className="input-group-text"><CiLock /></span>
-              <input type={`${showPassword ? "text" : "password"}`}
-                className="form-control"
-                placeholder="Confirm Password"
-                {...register("confirmPassword", {
-                  required: "Confirm password is required",
-                  validate: (value) => value === password || "Passwords do not match"
-                })}
-              />
-               <div className="show-password" onClick={handleShowPassword}>
-        {showPassword ?  <IoMdEyeOff size={20}/> :<IoMdEye size={20} /> }
-        </div>
-            </div>
-            {errors.confirmPassword && <p className="text-danger">{errors.confirmPassword.message}</p>}
+          <Input 
+            label="password" 
+            type={showPassword ? "text" : "password"}
+             placeholder="Enter your Password" 
+             Icon={CiLock} 
+             register={register} 
+             autoComplete="off"
+             validation={{required: "Password is required", pattern: {
+              value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/, 
+              message: "Password must include at least one lowercase letter, one uppercase letter, one digit, one special character, and be at least 6 characters long.",
+            }}}
+            error={errors.password}
+            onClick={handleShowPassword}
+            showPasswordIcon={showPassword ? <IoMdEyeOff size={20} /> : <IoMdEye size={20} />}
+            />
       
 
-     
-        <button type="submit" className="btn btn-success w-100 mt-3 fw-bold">
-        {!loading ? "Reset Password": <div className="spinner-border" style={{width: "25px", height: "25px"}} > 
-        </div>}
-        </button>
+      <Input
+        label="confirmPassword"
+        type={showConfirmPassword ? "text" : "password"}
+        placeholder="Confirm Password" 
+        autoComplete="off"
+        Icon={CiLock}
+        register={register}
+        validation={{
+          required: "Confirm Password is required",
+          pattern: {
+            validate: (value) => value === password || "Passwords do not match"
+          }
+        }}
+        error={errors.confirmPassword}
+        onClick={handleShowConfirmPassword}
+        showPasswordIcon={showConfirmPassword ? <IoMdEyeOff size={20} /> : <IoMdEye size={20} />}
+      />
+      
+
+        <LoadingButton loading={loading} buttonText="Reset Password"/>
+
 
           </form>
 

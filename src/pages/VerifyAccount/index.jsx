@@ -6,6 +6,8 @@ import toast from "react-hot-toast";
 import baseInstance from "../../config/baseInstance";
 import { useNavigate } from "react-router-dom";
 import useSubmitForm from "../../hooks/useSubmitForm";
+import LoadingButton from "../../components/UI/LoadingButton ";
+import Input from "../../components/UI/Input";
 
 const VerifyAccount = () => {
 
@@ -25,11 +27,8 @@ const VerifyAccount = () => {
     }
   }
 
-
-
-
     return (
-      <div className="auth-container">
+      <div className="auth-container  ">
       <div className="overlay d-flex justify-content-center align-items-center">
         <div className=" bg-white p-5 rounded auth-form">
         <div className="text-center">
@@ -40,41 +39,34 @@ const VerifyAccount = () => {
 
           <form onSubmit={handleSubmit(onSubmit)}>
 
-          <div className="input-group flex-nowrap mb-3">
-        <span className="input-group-text"><AiOutlineMail /></span>
-        <input type="email"
-         className="form-control" 
-         placeholder="Enter your E-mail"
-         {...register("email", { 
-        required: "Email is required",  
-      pattern: {
-       value:/^[^\s@]+@[^\s@]+\.[^\s@]+$/ , 
-       message: "Please enter a valid email address."
-               }
-              })}
-         />
-         
-        </div>
-        {errors.email && <p className=" text-danger">
-          {errors.email.message}
-          </p>}
+          <Input
+          label="email"
+           type="email"
+           placeholder="Enter your E-mail"
+           Icon={AiOutlineMail}
+           register={register}
+           validation={{required: "Email is required", pattern: {
+            value:/^[^\s@]+@[^\s@]+\.[^\s@]+$/ , 
+            message: "Please enter a valid email address." }
+            }}
+           error={errors.email}
+          />
 
-        <div className="input-group flex-nowrap">
-        <span className="input-group-text"><CiLock /></span>
-        <input type="text" className="form-control" placeholder="Code"
-           {...register("code", {  required: "code is Required" })}
-        />
-      </div>
-      {errors.code && <p className=" text-danger">
-          {errors.code.message}
-          </p>}
         
+        <Input 
+        label="code"
+        type="text"
+        placeholder="Enter your Code"
+        Icon={CiLock}
+        register={register}
+        validation={{required: "code is Required"}}  
+        error={errors.code}
+        />
 
-       
-        <button type="submit" className="btn btn-success w-100 mt-3 fw-bold">
-        {!loading ? "Verify": <div className="spinner-border" style={{width: "25px", height: "25px"}} > 
-        </div>}
-        </button>
+
+        <LoadingButton loading={loading} buttonText="Verify"/>
+
+
 
           </form>
 
@@ -85,3 +77,4 @@ const VerifyAccount = () => {
   }
   
   export default VerifyAccount;
+

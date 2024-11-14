@@ -7,13 +7,18 @@ import { useNavigate } from "react-router-dom";
 import useSubmitForm from "../../hooks/useSubmitForm";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import usePassword from "../../hooks/usePassword";
+import LoadingButton from "../../components/UI/LoadingButton ";
+import Input from "../../components/UI/Input";
+
 const ChnangePassword = ({handleLogout}) => {
 
   const {register,handleSubmit,watch,formState:{ errors }} = useForm()
   const password = watch("newPassword");
  const navigate=useNavigate()
   const {loading,setLoading}= useSubmitForm();
-  const {showPassword, handleShowPassword}= usePassword()
+  const {showPassword, handleShowPassword,
+    showConfirmPassword, handleShowConfirmPassword}
+    = usePassword()
 
 
  const onSubmit=async(data)=>{
@@ -40,10 +45,6 @@ const ChnangePassword = ({handleLogout}) => {
  }
 
 
-
-
-
-
   return (
     <div className="auth-container ">
     <div className=" d-flex justify-content-center align-items-center">
@@ -56,86 +57,59 @@ const ChnangePassword = ({handleLogout}) => {
 
         <form onSubmit={handleSubmit(onSubmit)}>
 
-      <div className="input-group flex-nowrap mb-3">
-      <span className="input-group-text"><CiLock /></span>
-
-      <input type={`${showPassword ? "text" : "password"}`} 
-      className="form-control" 
-      placeholder="Old Password"
-      autoComplete="off"
-      {...register("oldPassword", {
-          required: "Password is required",
-         pattern: {
-           value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
-      message: "Password must include at least one lowercase letter, one uppercase letter, one digit, one special character, and be at least 6 characters long."
-      }
-        })}
-      />
-      
-   <div className="show-password" onClick={handleShowPassword}>
-        {showPassword ?  <IoMdEyeOff size={20}/> :<IoMdEye size={20} /> }
-        </div>
-
-    </div>
-          {errors.oldPassword && <p className=" text-danger">
-            {errors.oldPassword.message}
-          </p>}
+          <Input 
+            label="oldPassword" 
+            type={showPassword ? "text" : "password"}
+             placeholder="Enter your old Password" 
+             Icon={CiLock} 
+             register={register} 
+             autoComplete="off"
+             validation={{required: "confirm Old Password is required", pattern: {
+              value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/, 
+              message: "Password must include at least one lowercase letter, one uppercase letter, one digit, one special character, and be at least 6 characters long.",
+            }}}
+            error={errors.oldPassword}
+            onClick={handleShowPassword}
+            showPasswordIcon={showPassword ? <IoMdEyeOff size={20} /> : <IoMdEye size={20} />}
+            />
 
 
+          <Input 
+            label="newPassword" 
+            type={showConfirmPassword ? "text" : "password"}
+             placeholder="Enter your new Password" 
+             Icon={CiLock} 
+             register={register} 
+             autoComplete="off"
+             validation={{required: "confirm New Password is required", pattern: {
+              value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/, 
+              message: "New Password must include at least one lowercase letter, one uppercase letter, one digit, one special character, and be at least 6 characters long.",
+            }}}
+            error={errors.newPassword}
+            onClick={handleShowConfirmPassword}
+            showPasswordIcon={showConfirmPassword ? <IoMdEyeOff size={20} /> : <IoMdEye size={20} />}
+            />
 
-    <div className="input-group flex-nowrap mb-3">
-      <span className="input-group-text"><CiLock /></span>
-      <input type={`${showPassword ? "text" : "password"}`} 
-      className="form-control" 
-      placeholder="New Password"
-      autoComplete="off"
-      {...register("newPassword", {
-          required: "New Password is required",
-         pattern: {
-           value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
-      message: "Password must include at least one lowercase letter, one uppercase letter, one digit, one special character, and be at least 6 characters long."
-      }
-        })}
-      />
+          <Input 
+            label="confirmNewPassword" 
+            type={showConfirmPassword ? "text" : "password"}
+             placeholder="Enter your confirm New Password" 
+             Icon={CiLock} 
+             register={register} 
+             autoComplete="off"
+             validation={{
+          required: "confirm New Password is required",
+          pattern: {
+            validate: (value) => value === password || "Passwords do not match"
+          }
+        }}
+            error={errors.confirmNewPassword}
+            onClick={handleShowConfirmPassword}
+            showPasswordIcon={showConfirmPassword ? <IoMdEyeOff size={20} /> : <IoMdEye size={20} />}
+            />
 
-  <div className="show-password" onClick={handleShowPassword}>
-        {showPassword ?  <IoMdEyeOff size={20}/> :<IoMdEye size={20} /> }
-        </div>
-      
-    </div>
-          {errors.newPassword && <p className=" text-danger">
-            {errors.newPassword.message}
-          </p>}
-
-
-
-    <div className="input-group flex-nowrap mb-3">
-      <span className="input-group-text"><CiLock /></span>
-      <input type={`${showPassword ? "text" : "password"}`} 
-      className="form-control"
-       placeholder="Confirm NeW Password"
-       autoComplete="off"
-       {...register("confirmNewPassword", {
-         required: "confirm New Password is required",
-        validate: (value) => value === password || "Passwords do not match"
-      })}
-       />
-
-    <div className="show-password" onClick={handleShowPassword}>
-        {showPassword ?  <IoMdEyeOff size={20}/> :<IoMdEye size={20} /> }
-        </div>
-
-
-    </div>
-    {errors.confirmNewPassword && <p className="text-danger">{errors.confirmNewPassword.message}</p>}
-      
-
-     
-      <button type="submit" className="btn btn-success w-100 mt-3 fw-bold">
-        {!loading ? "Change Password": <div className="spinner-border" style={{width: "25px", height: "25px"}} > 
-        </div>}
-        </button>
-
+    <LoadingButton loading={loading} buttonText="Change Password"/>
+    
         </form>
 
       </div>

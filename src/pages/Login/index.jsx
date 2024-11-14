@@ -6,7 +6,8 @@ import { useForm} from "react-hook-form";
 import useSubmitForm from "../../hooks/useSubmitForm";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import usePassword from "../../hooks/usePassword";
-  
+import Input from "../../components/UI/Input";
+import LoadingButton from "../../components/UI/LoadingButton ";
 
 
 const Login = () => {
@@ -17,22 +18,9 @@ const Login = () => {
   const {showPassword, handleShowPassword}= usePassword()
 
 
-
-
-
-  
-
-
-
-
-
-
-
-
-
   return (
     <div className="auth-container">
-      <div className="overlay d-flex justify-content-center align-items-center">
+      <div className="overlay">
         <div className=" bg-white p-5 rounded auth-form">
         
         <div className="text-center">
@@ -44,59 +32,42 @@ const Login = () => {
 
           <form onSubmit={handleSubmit(submitForm)}>
 
-          <div className="input-group flex-nowrap mb-3">
-        <span className="input-group-text"><AiOutlineMail /></span>
-        <input type="email"
-         className="form-control" 
-         placeholder="Enter your E-mail"
-         {...register("email", { 
-        required: "Email is required",  
-      pattern: {
-       value:/^[^\s@]+@[^\s@]+\.[^\s@]+$/ , 
-       message: "Please enter a valid email address."
-               }
-              })}
-         />
-         
-        </div>
-        {errors.email && <p className=" text-danger">
-          {errors.email.message}
-          </p>}
+            <Input 
+            label="email" 
+            type="email"
+             placeholder="Enter your E-mail" 
+             Icon={AiOutlineMail} 
+             register={register} 
+             validation={{required: "Email is required", pattern: {
+              value:/^[^\s@]+@[^\s@]+\.[^\s@]+$/ , 
+              message: "Please enter a valid email address."
+            }}}
+            error={errors.email}
+            />
 
-        <div className="input-group flex-nowrap mb-3 position-relative">
-        <span className="input-group-text"><CiLock /></span>
-        <input type={`${showPassword ? "text" : "password"}`}
-        className="form-control" 
-        placeholder="Password" 
-        autoComplete="off"
-        {...register("password", {
-        required: "Password is required",
-        pattern: {
-      value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
-      message: "Password must include at least one lowercase letter, one uppercase letter, one digit, one special character, and be at least 6 characters long."
-        }
-        })}
-        />
-        <div className="show-password" onClick={handleShowPassword}>
-        {showPassword ?  <IoMdEyeOff size={20}/> :<IoMdEye size={20} /> }
-        </div>
+          <Input 
+            label="password" 
+            type={showPassword ? "text" : "password"}
+             placeholder="Enter your Password" 
+             Icon={CiLock} 
+             register={register} 
+             autoComplete="off"
+             validation={{required: "Password is required", pattern: {
+              value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/, 
+              message: "Password must include at least one lowercase letter, one uppercase letter, one digit, one special character, and be at least 6 characters long.",
+            }}}
+            error={errors.password}
+            onClick={handleShowPassword}
+            showPasswordIcon={showPassword ? <IoMdEyeOff size={20} /> : <IoMdEye size={20} />}
+            />
 
-      </div>
-
-      {errors.password && <p className=" text-danger">
-          {errors.password.message}
-          </p>}
 
         <div className=" d-flex justify-content-between align-items-center mt-3">
           <Link className="text-success" to="/register">Register Now?</Link>
           <Link className="text-success" to="/forget-password">Forgot Password?</Link>
         </div>
 
-        <button type="submit" className="btn btn-success w-100 mt-3 fw-bold">
-        {!loading ? "Login": <div className="spinner-border" style={{width: "25px", height: "25px"}} > 
-        </div>}
-        </button>
-        
+        <LoadingButton loading={loading} buttonText="Login"/>
 
           </form>
 

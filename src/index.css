@@ -1,6 +1,5 @@
 body {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  height: 1000px;
 }
 a {
   text-decoration: none;
@@ -66,6 +65,17 @@ textarea{
 .auth-change .overlay {
   background-image: unset;
 }
+
+.show-password{
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 100!important;
+}
+
+
 
 @media (max-width: 768px) {
   .auth-container .auth-form {
@@ -212,12 +222,7 @@ textarea{
     width: 100%;
   }
 }
-.show-password{
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-}
+
 /* recipe details */
 .recipe-details{
   width: 50%;

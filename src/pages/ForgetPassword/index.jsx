@@ -2,6 +2,8 @@ import Logo from "../../assets/logo.png";
 import { AiOutlineMail } from "react-icons/ai";
 import { useForm} from "react-hook-form";
 import useSubmitForm from "../../hooks/useSubmitForm";
+import LoadingButton from "../../components/UI/LoadingButton ";
+import Input from "../../components/UI/Input";
 
 
 
@@ -11,7 +13,6 @@ const ForgetPassword = () => {
   const { register, handleSubmit ,formState: { errors }} = useForm();
 
   const {submitForm,loading}= useSubmitForm("Users/Reset/Request",false,"/reset-password");
-
 
 
 
@@ -29,30 +30,21 @@ const ForgetPassword = () => {
 
           <form onSubmit={handleSubmit(submitForm)}>
 
-          <div className="input-group flex-nowrap mb-3">
-        <span className="input-group-text"><AiOutlineMail /></span>
-        <input type="email"
-         className="form-control" 
-         placeholder="Enter your E-mail"
-         {...register("email", { 
-        required: "Email is required",  
-      pattern: {
-       value:/^[^\s@]+@[^\s@]+\.[^\s@]+$/ , 
-       message: "Please enter a valid email address."
-               }
-              })}
-         />
-         
-        </div>
-        {errors.email && <p className=" text-danger">
-          {errors.email.message}
-          </p>}
+          <Input 
+          label="email" 
+          type="email"
+           placeholder="Enter your E-mail" 
+           Icon={AiOutlineMail} 
+           register={register} 
+           error={errors.email}
+           validation={{required: "Email is required", pattern: {
+            value:/^[^\s@]+@[^\s@]+\.[^\s@]+$/ , 
+            message: "Please enter a valid email address."}
+            }}
+          />
 
-
-        <button type="submit" className="btn btn-success w-100 mt-3 fw-bold">
-        {!loading ? "Forget Password": <div className="spinner-border" style={{width: "25px", height: "25px"}} > 
-        </div>}
-        </button>
+          <LoadingButton loading={loading} buttonText="Forget Password" />
+       
 
           </form>
 
